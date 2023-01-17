@@ -1,42 +1,41 @@
 function getRandomHexColor() {
-    return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-  }
+  return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+}
 
 const refs = {
-    body: document.querySelector('body'),
-    startBtn: document.querySelector('[data-start]'),
-    stopBtn: document.querySelector('[data-stop]'),
-}
-refs.body.addEventListener('click', onBtnClick)
-// refs.startBtn.addEventListener('click', onStartBtnClick);
-// refs.stopBtn.addEventListener('click', onStopBtnClick);
-refs.stopBtn.setAttribute('disabled', true)
-let timerId = null;
+  body: document.querySelector('body'),
+  startBtn: document.querySelector('[data-start]'),
+  stopBtn: document.querySelector('[data-stop]'),
+};
+refs.body.addEventListener('click', onBtnClick);
+
+refs.stopBtn.setAttribute('disabled', true);
+let idTimer = null;
 
 function onBtnClick(evt) {
-    if(evt.target.hasAttribute('data-start')) {
-        onStartBtnClick(evt)
-    }
-    if(evt.target.hasAttribute('data-stop')) {
-        onStopBtnClick(evt)
-    }
+  if (evt.target.hasAttribute('data-start')) {
+    onStartBtnClick(evt);
+  }
+  if (evt.target.hasAttribute('data-stop')) {
+    onStopBtnClick(evt);
+  }
 }
 
 function onStartBtnClick(evt) {
-    refs.stopBtn.removeAttribute('disabled')
-    refs.startBtn.setAttribute('disabled', true)
-    
-    let currentColor = getRandomHexColor();
+  refs.stopBtn.removeAttribute('disabled');
+  refs.startBtn.setAttribute('disabled', true);
+
+  let currentColor = getRandomHexColor();
+  refs.body.style.backgroundColor = currentColor;
+  idTimer = setInterval(() => {
+    currentColor = getRandomHexColor();
     refs.body.style.backgroundColor = currentColor;
-    timerId = setInterval(()=>{
-        currentColor = getRandomHexColor();
-        refs.body.style.backgroundColor = currentColor;
-    }, 1000);
+  }, 500);
 }
 
 function onStopBtnClick(evt) {
-    refs.startBtn.removeAttribute('disabled')
-    refs.stopBtn.setAttribute('disabled', true)
-    clearInterval(timerId)
-    refs.body.style.backgroundColor = 'white';
+  refs.startBtn.removeAttribute('disabled');
+  refs.stopBtn.setAttribute('disabled', true);
+  clearInterval(idTimer);
+  refs.body.style.backgroundColor = 'Color';
 }
